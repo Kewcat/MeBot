@@ -1,0 +1,224 @@
+:root {
+    --body-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --msger-bg: #fff;
+    --border: 2px solid #e3e3e3;
+    --left-msg-bg: #c6c6c6;
+    --right-msg-bg: #579ffb;
+    
+  }
+  
+  html {
+    box-sizing: border-box;
+    
+  }
+  *
+  {
+    font-family: 'Golos Text', sans-serif;
+   
+  }
+  
+  *,
+  *:before,
+  *:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+  }
+  
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+   background: linear-gradient(#141E30,#243B55)/*#84aee6,#aee684)(#141E30,#243B55)(#0F2027,#203A43,#2c5364)(#9796f0, #fbc7d4)*/
+  }
+  
+  .msger {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 867px;
+    margin: 25px 10px;
+    height: calc(100% - 50px);
+    border: var(--border);
+    border-radius: 5px;
+    background: var(--msger-bg);
+  }
+  
+  .msger-header {
+    /* display: flex; */
+    font-size: medium;
+    justify-content: space-between;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    background: #f6f6f6;;
+    color: black;
+  }
+  
+  .msger-chat {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+  }
+  .msger-chat::-webkit-scrollbar {
+    width: 6px;
+  }
+  .msger-chat::-webkit-scrollbar-track {
+    background: #ddd;
+  }
+  .msger-chat::-webkit-scrollbar-thumb {
+    background: #f6f6f6;;
+  }
+  .msg {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 10px;
+  }
+  
+  .msg-img {
+    
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    background: #ddd;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    image-resolution: 0.1dpi;
+  }
+  .msg-bubble {
+    max-width: 450px;
+    padding: 15px;
+    border-radius: 15px;
+    background: var(--left-msg-bg);
+  }
+  .msg-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .msg-info-name {
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  .msg-info-time {
+    font-size: 0.85em;
+  }
+  
+  .left-msg .msg-bubble {
+    border-bottom-left-radius: 0;
+  }
+  
+  .right-msg {
+    flex-direction: row-reverse;
+  }
+  .right-msg .msg-bubble {
+    background-image: linear-gradient(90deg,#77A1D3, #79cbca,#e684ae);
+    color: #fff;
+    border-bottom-right-radius: 0;
+  }
+  .right-msg .msg-img {
+    margin: 0 0 0 10px;
+  }
+  
+  .msger-inputarea {
+    display: flex;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: white;
+    align-items: stretch;
+  }
+  .msger-inputarea * {
+    padding: 15px;
+    border: none;
+    border-radius: 3px;
+    font-size: 1em;
+    align-items: stretch;
+  }
+  .msger-input {
+    flex: 1;
+    background: #f6f6f6;
+    
+  }
+  .msger-send-btn {
+    margin-left: 10px;
+    background: rgb(255, 180, 221);
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.23s;
+  }
+  .msger-send-btn:hover {
+    background: rgb(255, 87, 205);
+  }
+  
+  .msger-chat {
+    background-color: #fcfcfe;
+  }
+ 
+
+  .emotionSection
+  {
+    position: fixed;
+    top: 15%;
+    left: 20px; /* Adjust the left value as per your preference */
+    transform: translateY(0,0); 
+    z-index: 999;  
+    width: 300px;
+    margin-bottom: 10px;
+  }
+  .emotionDiv{
+    background-color: #c7c7c7;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-color: black;
+
+  }
+  .audioSection {
+    position: fixed;
+    top: 15%;
+    right: 20px;
+    transform: translate(0, 0);
+    z-index: 999;
+  }
+  
+  .audio-recs {
+    background-color: #c7c7c7;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-color: black;
+  }
+  
+  .card {
+    width: 300px; /* Adjust the width as per your requirements */
+    margin-bottom: 10px; /* Add margin-bottom to create spacing between cards */
+  }
+.circular-button {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #fbfbfb;
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.circular-button i {
+  line-height: 50px;
+}
+
+
+  
+ 

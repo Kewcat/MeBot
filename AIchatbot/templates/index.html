@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Chatbot</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href=" {{url_for('static', filename='styles/style.css')}}"> 
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@600&display=swap');
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  <button class="btn btn-light circular-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i class="fas fa-bars"></i></button>
+
+  <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">About</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <p>MeBot is an ANN chatbot that is able to reply to your messages and give you music recommendations</p>
+    </div>
+  </div>  
+  
+  
+
+  <section class="emotionSection">
+    <div class="emotionDiv card">
+      <div class="card-body">
+        <h5 class="card-title">I think you are.....</h5>
+        <img id="emotion-img" class="card-img-top" src="" alt="">
+        <p id="emotion-text" class="card-text"></p>
+      </div>
+    </div>
+  </section>
+  
+
+  <section class="audioSection">
+    <div class="audio-recs card">
+      <div class="card-body">
+        <h5 class="card-title">Top Recommended Songs For You:)</h5>
+        <div id="audios-recs" class="card-text"></div>
+      </div>
+    </div>
+  </section>
+  
+  
+  <section class="msger">
+    <header class="msger-header">
+      <div class="msger-header-title">
+       <p>MeBot is here to talk!</p>  
+      </div>
+    </header>
+
+    <main class="msger-chat">
+      <div class="msg left-msg">
+        <div class="msg-img" style="background-image: url('/static/images/avatar.png')"></div>
+
+        <div class="msg-bubble">
+          <div class="msg-info">
+            <div class="msg-info-name">MeBot</div>
+            <div class="msg-info-time"></div>
+          </div>
+
+          <div class="msg-text">
+            Hi! MeBot is here to talk!
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <form class="msger-inputarea">
+      <input type="text" class="msger-input" id="textInput" placeholder="Type here!">
+      <button type="submit" class="msger-send-btn">Send</button>
+    </form>
+
+    
+    
+    
+    
+</section>
+  <!-- partial -->
+  <script src='https://use.fontawesome.com/releases/v5.0.13/js/all.js'></script>
+  <script>
+
+    const msgerForm = get(".msger-inputarea");
+    const msgerInput = get(".msger-input");
+    const msgerChat = get(".msger-chat");
+
+
+    
+    const BOT_IMG = "{{ url_for('static', filename='images/avatar.png') }}";
+    const PERSON_IMG = "{{ url_for('static', filename='images/icon.png') }}";
+    const BOT_NAME = "";
+    const PERSON_NAME = "You";
+
+    msgerForm.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const msgText = msgerInput.value;
+      if (!msgText) return;
+
+      appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
+      msgerInput.value = "";
+      botResponse(msgText);
+    });
+
+    function appendMessage(name, img, side, text) {
+  const msgHTML = `
+    <div class="msg ${side}-msg">
+      <div class="msg-img" style="background-image: url('${img}')"></div>
+      <div class="msg-bubble">
+        <div class="msg-info">
+          <div class="msg-info-name">${name}</div>
+          <div class="msg-info-time">${formatDate(new Date())}</div>
+        </div>
+  
+        <div class="msg-text">${text}</div>
+      </div>
+    </div>
+  `;
+  
+  msgerChat.insertAdjacentHTML("beforeend", msgHTML);
+  msgerChat.scrollTop += 500;
+}
+
+
+function updateEmotion(emotion) {
+  const emotionImg = document.getElementById("emotion-img");
+  const emotionText = document.getElementById("emotion-text");
+
+  // Map emotion to corresponding image and text
+  const emotionData = {
+    "Happy": {
+      image: "{{ url_for('static', filename='images/happy.png') }}",
+      text: "Happy 〵(^ o ^)〴  "
+    },
+    "Sad": {
+      image: "{{ url_for('static', filename='images/sad.png') }}",
+      text: "Sad (ᗒ༎︵༎ᗕ)"
+    },
+    "Angry": {
+      image: "{{ url_for('static', filename='images/angry.png') }}",
+      text: "Angry ლ(•̀_•́ლ)"
+    },
+    "Surprise": {
+      image: "{{ url_for('static', filename='images/surprised.png') }}",
+      text: "Surprised  ༼ つ ⚈⚬⚈ ༽つ"
+    },
+    "Fear": {
+      image: "{{ url_for('static', filename='images/cute.png') }}",
+      text: "Scared （／｡•́︿•̀｡＼）"
+    },
+  
+
+    
+  };
+
+  // Check if the detected emotion exists in the data
+  if (emotion in emotionData) {
+    const emotionInfo = emotionData[emotion];
+    emotionImg.src = emotionInfo.image;
+    emotionText.textContent = emotionInfo.text;
+  } else {
+    emotionImg.src = ""; // Clear the image source if the emotion is not found
+    emotionText.textContent = ""; // Clear the text content if the emotion is not found
+  }
+}
+
+
+
+  function generateAudioHTML(audio) {
+  let html = "";
+  for (let i = 0; i < audio.length; i++) {
+    const track = audio[i];
+    const trackName = track.name;
+    const artist = track.artist.name;
+
+    html += `<p>${trackName} - ${artist}</p>`;
+  }
+  return html;
+}
+
+
+    function botResponse(rawText) {
+
+      // Bot Response
+      $.get("/get", { msg: rawText }).done(function (data) {
+    console.log(rawText);
+    console.log(data);
+    const { reply, max_emo,audio } = data;
+    appendMessage(BOT_NAME, BOT_IMG, "left", reply);
+    updateEmotion(max_emo);
+
+    document.getElementById("audios-recs").innerHTML = generateAudioHTML(audio);
+
+
+
+      });
+
+    }
+
+
+    // Utils
+    function get(selector, root = document) {
+      return root.querySelector(selector);
+    }
+
+    function formatDate(date) {
+      const h = "0" + date.getHours();
+      const m = "0" + date.getMinutes();
+
+      return `${h.slice(-2)}:${m.slice(-2)}`;
+    }
+
+
+
+  </script>
+
+</body>
+
+</html>
